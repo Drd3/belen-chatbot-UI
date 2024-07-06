@@ -2,6 +2,10 @@ import axios from "axios";
 import { ReactNode, createContext, useState } from "react";
 import { text } from "stream/consumers";
 
+const apiUrl : string = process.env.REACT_APP_BASE_URL === undefined ? "" :  process.env.REACT_APP_BASE_URL;
+
+console.log("API uRL :",apiUrl)
+
 interface ChatContextType {
     recentMessage: string;
     setRecentMessage: React.Dispatch<React.SetStateAction<string>>;
@@ -34,9 +38,11 @@ const ChatProvider = ({children} : ChatProviderProps) => {
     const [systemStatus, setSystemStatus] = useState<loadingStatus>("initial")
     const [historyStatus, setHistoryStatus] = useState<loadingStatus>("initial")
 
+
+
     const getCompleteChatHistory =  () => {
         setHistoryStatus("loading")
-        axios.get('http://localHost:3000')
+        axios.get(apiUrl)
         .then(res => {
             setHistoryStatus("success")
             setMessageList(res.data) 
@@ -59,7 +65,7 @@ const ChatProvider = ({children} : ChatProviderProps) => {
                 } 
             }
         ])
-        axios.post('http://localHost:3000/', { prompt: prompt })
+        axios.post(apiUrl, { prompt: prompt })
         .then(res => {
             setSystemStatus("success")
             setMessageList(prevItems => [...prevItems, res.data])
