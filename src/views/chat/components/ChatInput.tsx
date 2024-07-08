@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Button, TextField, Typography } from "@mui/material"
+import { Box, Button, TextField, Typography } from "@mui/material"
 import { useContext, useState } from "react";
 import { ChatContext } from "../../../context/chatContext/chatContext";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
@@ -26,12 +26,17 @@ const ChatInputContainer = styled("div")({
     backgroundColor: "#F5F5F5",
     borderRadius: "30px",
     padding: ".4rem",
-    paddingLeft: "1.2rem"
+    paddingLeft: "1.2rem",
+
+    margin: ".7rem .8rem",
+
+    '@media screen and (min-width: 576px)':{
+        margin: "0",
+    }
 });
 
 
 const stringVeritication = (str : string) => {
-    console.log(/[a-zA-Z]/.test(str))
     return /[a-zA-Z]/.test(str);
 };
 
@@ -60,10 +65,15 @@ const ChatInput = () => {
         } 
     }
 
-    console.log(systemStatus === "loading")
-
     return(
-        <div>
+        <Box 
+            sx={{
+                borderTop: "1px solid #e6e6e6",
+                '@media screen and (min-width: 576px)': {
+                    borderTop: "none",
+                }
+            }}
+        >
             <Typography 
                 variant="caption" 
                 fontWeight={700} 
@@ -98,7 +108,7 @@ const ChatInput = () => {
                         <ArrowUpwardIcon fontSize={"small"} />
                     </Button>
             </ChatInputContainer>
-        </div>
+        </Box>
         
     )
 }

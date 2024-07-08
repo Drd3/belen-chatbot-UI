@@ -5,7 +5,7 @@ const Message = styled(Markdown)({
     '& > p':{
         margin: "0" 
     }
-  });
+});
 
 
 interface props {
@@ -13,17 +13,37 @@ interface props {
     type : "user" | "assistant"
 }
 
+const ChatContainer = styled("div")({
+    marginBottom: "3rem",
+
+    "@media screen and (min-width: 576px)":{
+        display: "flex", 
+        gap: "1rem", 
+        marginBottom: "4rem",
+
+        "& img":{
+            marginLeft: "0 !important"
+        }
+    }
+})
+
 const ChatMessage : React.FC<props> = ({message, type}) => {
 
     return(
         <>
         {
             type === "assistant" ? 
-            <div style={{display: "flex", gap: "1rem", marginBottom: "4rem"}}>
+            <ChatContainer>
                 <img 
                     src="./belen-bot2.png" 
                     alt=""
-                    style={{width: 50, height: 50, borderRadius: "50px"}}
+                    style={{
+                        display: "block",
+                        width: 50, 
+                        height: 50, 
+                        borderRadius: "50px", 
+                        marginBottom: ".5rem"
+                    }}
                 />
                 <div
                     style=
@@ -39,10 +59,23 @@ const ChatMessage : React.FC<props> = ({message, type}) => {
                         {message}
                     </Message>
                 </div>
-            </div>
+            </ChatContainer>
             :
-            <div style={{display: "flex", gap: ".6rem", marginBottom: "4rem"}}>
-                
+            <ChatContainer>
+                <img 
+                    src="./user.png" 
+                    alt=""
+                    style={{
+                        width: 44, 
+                        height: 45, 
+                        borderRadius: "50px", 
+                        marginTop: "6px",
+                        display: "block",
+                        marginLeft: "auto",
+                        marginBottom: ".5rem",
+                        order: 2
+                    }}
+                />
                 <div
                     style=
                     {
@@ -64,12 +97,8 @@ const ChatMessage : React.FC<props> = ({message, type}) => {
                         {message}
                     </Message>
                 </div>
-                <img 
-                    src="./user.png" 
-                    alt=""
-                    style={{width: 44, height: 45, borderRadius: "50px", marginTop: "6px"}}
-                />
-            </div>
+                
+            </ChatContainer>
 
 
         }
