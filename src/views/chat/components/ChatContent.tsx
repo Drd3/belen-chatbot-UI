@@ -31,7 +31,7 @@ const ChatContent = () => {
             setOpenSnakbar(true)
         }
     }, [historyStatus])
-
+    
    
 
     return(
