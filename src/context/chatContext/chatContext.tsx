@@ -1,10 +1,7 @@
 import axios from "axios";
 import { ReactNode, createContext, useState } from "react";
-import { text } from "stream/consumers";
 
 const apiUrl : string = process.env.REACT_APP_BASE_URL === undefined ? "" :  process.env.REACT_APP_BASE_URL;
-
-console.log("API uRL :",apiUrl)
 
 interface ChatContextType {
     recentMessage: string;
@@ -23,22 +20,17 @@ interface ChatContextType {
 export const ChatContext = createContext<ChatContextType>({} as ChatContextType)
 
 
-
-
 type ChatProviderProps = {
     children: ReactNode;
 };
 
 type loadingStatus =  "initial" | "loading" | "failed" | "success" 
 
-
 const ChatProvider = ({children} : ChatProviderProps) => {
     const [recentMessage, setRecentMessage] = useState<string>("")
     const [messageList, setMessageList] = useState<any[]>([])
     const [systemStatus, setSystemStatus] = useState<loadingStatus>("initial")
     const [historyStatus, setHistoryStatus] = useState<loadingStatus>("initial")
-
-
 
     const getCompleteChatHistory =  () => {
         setHistoryStatus("loading")
@@ -67,8 +59,16 @@ const ChatProvider = ({children} : ChatProviderProps) => {
         ])
         axios.post(apiUrl, { prompt: prompt })
         .then(res => {
-            setSystemStatus("success")
-            setMessageList(prevItems => [...prevItems, res.data])
+
+            if(res.data !== ''){
+                setSystemStatus("success")
+                setMessageList(prevItems => [...prevItems, res.data])
+            }else{
+                setSystemStatus("failed")
+            }
+            
+        }).catch(err => {
+            setSystemStatus("failed")
         })
     } 
 
