@@ -1,5 +1,6 @@
 import { styled } from "@mui/material";
 import Markdown from "react-markdown";
+import ActionsManager from "../../../components/actionsManager/ActionsManager";
 
 const Message = styled(Markdown)({
     '& > p':{
@@ -10,11 +11,13 @@ const Message = styled(Markdown)({
 
 interface props {
     message: string,
-    type : "user" | "assistant"
+    type : "user" | "assistant",
+    actions: any | null
 }
 
 const ChatContainer = styled("div")({
     marginBottom: "3rem",
+    maxWidth: "100%",
 
     "@media screen and (min-width: 576px)":{
         display: "flex", 
@@ -27,7 +30,7 @@ const ChatContainer = styled("div")({
     }
 })
 
-const ChatMessage : React.FC<props> = ({message, type}) => {
+const ChatMessage : React.FC<props> = ({message, type, actions}) => {
 
     return(
         <>
@@ -45,20 +48,31 @@ const ChatMessage : React.FC<props> = ({message, type}) => {
                         marginBottom: ".5rem"
                     }}
                 />
-                <div
-                    style=
-                    {
+                <div>
+                    <div
+                        style=
                         {
-                            maxWidth: "700px",
-                            textAlign: "left",
+                            {
+                                maxWidth: "700px",
+                                textAlign: "left",
+                            }
+                    
                         }
-                
-                    }
-                >
-                    <Message>
-                        {message}
-                    </Message>
+                    >
+                        <Message>
+                            {message}
+                        </Message>
+                    </div>
+                    
+                    <div style={{marginTop: "1rem", maxWidth: "100%"}}>
+                        {
+                            actions !== null ?
+                                <ActionsManager actionList={actions}/>
+                            :null
+                        }
+                    </div>
                 </div>
+                
             </ChatContainer>
             :
             <ChatContainer>
