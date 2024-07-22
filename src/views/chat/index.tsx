@@ -27,7 +27,7 @@ const ChatContainer = styled('div')(
         boxSizing: "border-box",
         display: "flex",
         flexDirection: "column",
-        height: "100svh",
+        height: "100dvh",
 
         '@media screen and (min-width:576px)':{
             height: "100%",
