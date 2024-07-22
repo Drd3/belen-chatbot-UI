@@ -8,7 +8,7 @@ import MediaContainer from "./components/MediaContainer";
 const MainContainer = styled(Box)({
     backgroundColor: '#fff',
     boxShadow: "0px 0px 12px -2px #00000045",
-    height: "100%",
+    height: "100vh",
 
     '@media screen and (min-width:576px)':{
         borderRadius: 20,
